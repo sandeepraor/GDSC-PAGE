@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+    .form-control {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      width: 50vw;
+    }
+    .view_password {
+      width: 50vw;
+      height: 3rem;
+    }
+  </style>
+  <body>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+      "
+    >
+      <form method="post" action="/view/<%= username %>">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Enter Password for <%= username %>"
+        />
+        <input class="btn btn-primary" type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>

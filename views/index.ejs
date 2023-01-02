@@ -1,0 +1,56 @@
+<head>
+    <title>GDSC UVCE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<!-- create a dashboard with participant list -->
+<nav  class="navbar bg-body-tertiary">
+    <div style="background-color: #f3f3f3;display: flex;align-items: center;justify-content: space-between;">
+        <a class="navbar-brand" href="/">
+            GDSC UVCE
+        </a>
+        <a style="margin-right: 10px;" href="/signup" class="btn btn-primary">Signup</a>
+    </div>
+  </nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                    <h1>Participants</h1>
+                    <p style="margin: 0px;">Number of participants: <%= users.length %><p>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Branch</th>
+                        <th>Year</th>
+                        <th>Instagram</th>
+                        <th>Webpage</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0; i<users.length; i++){ %>
+                    <tr>
+                        <td><%= users[i].name %></td>
+                        <td><%= users[i].branch %></td>
+                        <td><%= users[i].year %></td>
+                        <% if(users[i].shareInstagram ){ %>
+                        <td><%= users[i].instagram %></td>
+                        <% } else { %>
+                        <td>Not Shared</td>
+                        <% } %>
+                        <td>
+                            <a href="/view/<%= users[i].username %>" class="btn btn-primary">View</a>
+                        </td>
+                        <td>
+                            <a href="/edit/<%= users[i].username %>" class="btn btn-success">Edit</a>
+                        </td>
+                        
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>

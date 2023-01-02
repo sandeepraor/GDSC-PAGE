@@ -1,0 +1,77 @@
+<head>
+  <title>GDSC</title>
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous"
+  />
+</head>
+
+<!-- signup form -->
+<style>
+  .form-control {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+</style>
+<nav class="navbar bg-body-tertiary">
+  <div
+    style="
+      background-color: #f3f3f3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    "
+  >
+    <a class="navbar-brand" href="/"> GDSC UVCE </a>
+  </div>
+</nav>
+<div class="container">
+  <form method="post" action="/signup">
+    <input
+      type="text"
+      name="name"
+      class="form-control"
+      required
+      placeholder="Enter your name"
+    />
+    <input
+      type="text"
+      name="branch"
+      class="form-control"
+      required
+      placeholder="Enter your branch"
+    />
+    <input
+      type="text"
+      name="year"
+      class="form-control"
+      required
+      placeholder="Enter your year"
+    />
+    <input
+      type="text"
+      name="instagram"
+      class="form-control"
+      placeholder="Enter your instagram username"
+    />
+    <input
+      type="text"
+      name="username"
+      class="form-control"
+      required
+      placeholder="Enter your username"
+    />
+    <input
+      type="password"
+      name="password"
+      class="form-control"
+      required
+      placeholder="Enter your password"
+    />
+    <label>Share Instagram</label>
+    <input type="checkbox" name="shareInstagram" />
+    <input type="submit" value="Signup" class="btn btn-primary" />
+  </form>
+</div>

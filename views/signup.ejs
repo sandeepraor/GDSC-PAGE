@@ -60,20 +60,38 @@
           required
           placeholder="Enter your name"
         />
-        <input
+        <!-- <input
           type="text"
           name="branch"
           class="form-control"
           required
           placeholder="Enter your branch"
-        />
-        <input
+        /> -->
+        <select name="branch" id="branch" required class="form-control">
+          <option disabled selected value>Enter Your Branch</option>
+          <option value="CSE">CSE</option>
+          <option value="ISE">ISE</option>
+          <option value="AIML">AIML</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="MECH">MECH</option>
+          <option value="CIVIL">CIVIL</option>
+          <option value="ARCH">ARCH</option>
+        </select>
+        <!-- <input
           type="text"
           name="year"
           class="form-control"
           required
           placeholder="Enter your year"
-        />
+        /> -->
+        <select name="year" id="year" required class="form-control" aria-placeholder="Select Year">
+          <option disabled selected>Enter Your Year</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
         <input
           type="text"
           name="instagram"

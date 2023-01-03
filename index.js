@@ -61,7 +61,7 @@ app.post('/signup', function (req, res) {
   var newUser = new User({
     name: req.body.name,
     email: req.body.email,
-    username: req.body.username.replaceAll(' ','_'),
+    username: req.body.username.split(' ').join(''),
     branch: req.body.branch,
     year: req.body.year,
     password: req.body.password,

@@ -160,7 +160,7 @@ app.post('/view/:username', (req, res) => {
 });
 app.get('/:hash/html/:username', (req, res) => {
   User.findOne({ username: UnicodeDecodeB64(req.params.hash) }, (err, user) => {
-    if (err) res.send('404');
+    if (err || user === null) res.send('404');
     else res.send(user.html);
   });
 });

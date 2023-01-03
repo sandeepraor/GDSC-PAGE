@@ -191,7 +191,6 @@ app.post('/view/:username', (req, res) => {
   });
 });
 app.get('/:hash/edit/:username', (req, res) => {
-  var hash_str = req.params.hash;
   bcrypt.compare(
     req.params.username,
     decodeURIComponent(req.params.hash),
@@ -200,7 +199,10 @@ app.get('/:hash/edit/:username', (req, res) => {
       if (result) {
         User.findOne({ username: req.params.username }, (err, user) => {
           if (err || user === null) res.send('404');
-          else res.render('edit', { user: user, hash_str: hash_str });
+          else {
+            var hash_str = req.params.hash;
+            res.render('edit', { user: user, hash_str: hash_str });
+          }
         });
       } else res.send('url not found');
     }

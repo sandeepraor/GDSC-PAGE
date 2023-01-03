@@ -89,43 +89,63 @@ app.get('/html/:username', function (req, res) {
   });
 });
 
-app.get('/edit/:username', function (req, res) {
-  User.findOne({ username: req.params.username }, function (err, user) {
-    if (err) {
-      res.send('404');
-    } else {
-      res.render('edit', {
-        user: user,
-      });
-    }
-  });
-});
+// app.get('/edit/:username', function (req, res) {
+//   User.findOne({ username: req.params.username }, function (err, user) {
+//     if (err) {
+//       res.send('404');
+//     } else {
+//       res.render('editauth', {
+//         username: user.username,
+//       });
+//     }
+//   });
+// });
 
-app.post('/edit/:username', function (req, res) {
-  User.findOne(
-    { username: req.params.username, password: req.body.password },
-    function (err, user) {
-      if (err) {
-        res.send(
-          'An Error Occured while processing your request. Please try again later.'
-        );
-      } else {
-        if (user == null) {
-          res.send('Invalid Credentials');
-        } else {
-          user.html = req.body.html;
-          user.modifiedCount = user.modifiedCount + 1;
-          user.save(function (err, user) {
-            if (err) {
-              res.send('404');
-            } else {
-              res.redirect('/');
-            }
-          });
-        }
-      }
+app.post('/:hash/gdsc_uvce/edit/:username', function (req, res) {
+  bcrypt.compare(
+    req.params.username,
+    decodeURIComponent(req.params.hash),
+    function (err, result) {
+      if (err) res.send('404');
+      if (result) {
+        User.findOne({ username: req.params.username }, (err, user) => {
+          if (err || user === null) res.send('404');
+          else {
+            user.html = req.body.html;
+            user.modifiedCount = user.modifiedCount + 1;
+            user.save(function (err, user) {
+              if (err) {
+                res.send('404');
+              } else {
+                res.redirect('/');
+              }
+            });
+          }
+        });
+      } else res.send('Invalid Credentials');
     }
   );
+  // User.findOne({ username: req.params.username }, function (err, user) {
+  //   if (err) {
+  //     res.send(
+  //       'An Error Occured while processing your request. Please try again later.'
+  //     );
+  //   } else {
+  //     if (user == null) {
+  //       res.send('Invalid Credentials');
+  //     } else {
+  //       user.html = req.body.html;
+  //       user.modifiedCount = user.modifiedCount + 1;
+  //       user.save(function (err, user) {
+  //         if (err) {
+  //           res.send('404');
+  //         } else {
+  //           res.redirect('/');
+  //         }
+  //       });
+  //     }
+  //   }
+  // });
 });
 
 //Test route to get all the users
@@ -147,9 +167,10 @@ function UnicodeDecodeB64(str) {
   return decodeURIComponent(bcrypt.compare());
 }
 
-app.get('/view/:username', (req, res) => {
-  res.render('viewauth', { username: req.params.username });
+app.get('/edit/:username', (req, res) => {
+  res.render('editauth', { username: req.params.username });
 });
+
 app.post('/view/:username', (req, res) => {
   User.findOne({ username: req.params.username }, (err, user) => {
     if (err) res.send('404');
@@ -161,7 +182,7 @@ app.post('/view/:username', (req, res) => {
             if (err) res.send('404');
             else {
               str = encodeURIComponent(hs);
-              res.redirect(`/${str}/html/${req.params.username}`);
+              res.redirect(`/${str}/edit/${req.params.username}`);
             }
           });
         });
@@ -169,7 +190,8 @@ app.post('/view/:username', (req, res) => {
     }
   });
 });
-app.get('/:hash/html/:username', (req, res) => {
+app.get('/:hash/edit/:username', (req, res) => {
+  var hash_str = req.params.hash;
   bcrypt.compare(
     req.params.username,
     decodeURIComponent(req.params.hash),
@@ -178,7 +200,7 @@ app.get('/:hash/html/:username', (req, res) => {
       if (result) {
         User.findOne({ username: req.params.username }, (err, user) => {
           if (err || user === null) res.send('404');
-          else res.send(user.html);
+          else res.render('edit', { user: user, hash_str: hash_str });
         });
       } else res.send('url not found');
     }

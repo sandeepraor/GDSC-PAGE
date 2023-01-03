@@ -32,7 +32,7 @@
   <br />
   <form
     method="post"
-    action="/edit/<%= user.username %>"
+    action="/<%= hash_str %>/gdsc_uvce/edit/<%= user.username %>"
     style="
       display: flex;
       justify-content: center;
@@ -49,14 +49,6 @@
     >
 <%= user.html %></textarea
     >
-    <input
-      type="password"
-      name="password"
-      class="form-control"
-      required
-      placeholder="Enter password for <%= user.username %>"
-    />
-
     <button
       type="submit"
       class="btn btn-primary"

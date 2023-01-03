@@ -67,7 +67,7 @@ app.post('/signup', function (req, res) {
     password: req.body.password,
     phone: req.body.phone,
     instagram: req.body.instagram,
-    shareInstagram: req.body.shareInstagram == 'on' ? true : false,
+    shareInstagram: req.body.shareInstagram === 'true' ? true : false,
   });
   newUser.save(function (err, user) {
     if (err) {

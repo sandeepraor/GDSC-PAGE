@@ -200,7 +200,7 @@ app.get('/:hash/edit/:username', (req, res) => {
         User.findOne({ username: req.params.username }, (err, user) => {
           if (err || user === null) res.send('404');
           else {
-            var hash_str = req.params.hash;
+            var hash_str = encodeURIComponent(req.params.hash);
             res.render('edit', { user: user, hash_str: hash_str });
           }
         });

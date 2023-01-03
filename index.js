@@ -3,7 +3,10 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
+var bcrypt = require('bcrypt');
 //connect to mongodb atlas
+var saltround = 10;
+
 var mongoose = require('mongoose');
 const User = require('./models/User');
 const uri =
@@ -136,12 +139,12 @@ app.post('/edit/:username', function (req, res) {
 
 function b64EncodeUnicode(str) {
   //encodes the string
-  return btoa(encodeURIComponent(str));
+  return encodeURIComponent(bcrypt.hash(str, 10));
 }
 
 function UnicodeDecodeB64(str) {
   //decodes the string
-  return decodeURIComponent(atob(str));
+  return decodeURIComponent(bcrypt.compare());
 }
 
 app.get('/view/:username', (req, res) => {
@@ -152,17 +155,34 @@ app.post('/view/:username', (req, res) => {
     if (err) res.send('404');
     else {
       if (user.password === req.body.password) {
-        str = b64EncodeUnicode(req.params.username); //hashing the string to make a kind of protected route
-        res.redirect(`/${str}/html/${req.params.username}`);
+        bcrypt.genSalt(saltround, function (err, salt) {
+          if (err) res.send('404');
+          bcrypt.hash(user.username, salt, function (err, hs) {
+            if (err) res.send('404');
+            else {
+              str = encodeURIComponent(hs);
+              res.redirect(`/${str}/html/${req.params.username}`);
+            }
+          });
+        });
       } else res.send('Enter a correct password!!');
     }
   });
 });
 app.get('/:hash/html/:username', (req, res) => {
-  User.findOne({ username: UnicodeDecodeB64(req.params.hash) }, (err, user) => {
-    if (err || user === null) res.send('404');
-    else res.send(user.html);
-  });
+  bcrypt.compare(
+    req.params.username,
+    decodeURIComponent(req.params.hash),
+    function (err, result) {
+      if (err) res.send('404');
+      if (result) {
+        User.findOne({ username: req.params.username }, (err, user) => {
+          if (err || user === null) res.send('404');
+          else res.send(user.html);
+        });
+      } else res.send('url not found');
+    }
+  );
 });
 app.listen(3000, function () {
   console.log('Server started on port 3000...');

@@ -25,7 +25,9 @@ app.use(
     extended: true,
   })
 );
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({limit: "5mb"}));
+app.use(bodyParser.urlencoded({limit: "5mb", extended: true, parameterLimit:5000}));
 
 //create static path
 app.use(express.static(path.join(__dirname, 'public')));

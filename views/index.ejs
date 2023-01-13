@@ -22,6 +22,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>Sl No.</th>
                         <th>Name</th>
                         <th>Branch</th>
                         <th>Year</th>
@@ -33,6 +34,7 @@
                 <tbody>
                     <% for(var i=0; i<users.length; i++){ %>
                     <tr>
+                        <td><%= i+1 %></td>
                         <td><%= users[i].name %></td>
                         <td><%= users[i].branch %></td>
                         <td><%= users[i].year %></td>
